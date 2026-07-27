@@ -1,6 +1,6 @@
 // Endpoint de Google Apps Script. 
 // DEBE ser reemplazado por la URL de despliegue real que se obtendrá en el paso del Backend.
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbysQrauShAzmuvCwPiyrL6nE7KvOqHDZPfWqcVQMgNNQbHxdMt1e2ogVtgmMH7u9d4m0w/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxhDoIhk8RYZsjf2Uft2s958fAS7Q1OZ189OvvOoTebouzoca7wqehQa9MUqGLm5c5c/exec';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const recordStatus = document.getElementById('record-status');
     const recordContainer = document.querySelector('.record-container');
     const uploadStatus = document.getElementById('upload-status');
-    
+
     // New form elements
     const btnTextForm = document.getElementById('btn-text-form');
     const textForm = document.getElementById('text-form');
