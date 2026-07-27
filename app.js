@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnTextForm = document.getElementById('btn-text-form');
     const textForm = document.getElementById('text-form');
     const formUploadStatus = document.getElementById('form-upload-status');
+    const btnBack = document.getElementById('btn-back');
 
     // Navigation
     function showScreen(screenToShow) {
@@ -40,6 +41,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnTextForm.addEventListener('click', () => {
         showScreen(screenForm);
+    });
+
+    btnBack.addEventListener('click', () => {
+        showScreen(screen2);
     });
 
     // Recording Logic

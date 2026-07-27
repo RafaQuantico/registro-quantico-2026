@@ -1,5 +1,5 @@
 :root {
-    --bg-color: #eeedef;
+    --bg-color: #ffffff;
     --text-primary: #000000;
     --text-secondary: #555555;
     --accent: #000000;
@@ -30,6 +30,7 @@ body, html {
     max-width: 600px;
     margin: 0 auto;
     position: relative;
+    background-color: #eeedef;
 }
 
 /* Header & Logo */
@@ -51,10 +52,9 @@ body, html {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    padding: 0 40px 80px;
+    padding: 0;
     position: absolute;
-    top: 100px;
+    top: 0;
     bottom: 0;
     left: 0;
     right: 0;
@@ -79,6 +79,26 @@ body, html {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    margin: auto 0;
+}
+
+.middle-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 0;
+}
+
+.header-img, .footer-img {
+    flex-shrink: 1;
+    min-height: 0;
+}
+
+.content > *:not(img) {
+    padding-left: 40px;
+    padding-right: 40px;
 }
 
 h1, h2 {
