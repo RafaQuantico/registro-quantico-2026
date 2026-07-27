@@ -15,18 +15,19 @@ const FOLDER_ID = '1Zav2AH_Ob90hfHI70Q7UsL0W2_i7Ojvl';
 const SHEET_ID = '1i6tNzEfeflP_vUFtDatgp50yzNHXhraqPpw8T7AQy-0';
 const EMAIL_DESTINO = 'jorge@quantico.cl, rafael@quantico.cl';
 
+function probarEnvio() {
+  GmailApp.sendEmail("jorge@quantico.cl", "Prueba de permiso", "Si te llega esto, los permisos están arreglados.");
+}
+
 function doPost(e) {
   try {
-    // Para evitar problemas de CORS
     if (typeof e === 'undefined') {
       return ContentService.createTextOutput(JSON.stringify({ status: "error", message: "No data received" })).setMimeType(ContentService.MimeType.JSON);
     }
     
-    // El frontend envía todo como texto plano
     const data = JSON.parse(e.postData.contents);
     const type = data.type;
     
-    // Obtener Fecha y Hora actual
     const now = new Date();
     const fecha = Utilities.formatDate(now, "America/Santiago", "dd/MM/yyyy");
     const hora = Utilities.formatDate(now, "America/Santiago", "HH:mm:ss");
@@ -47,24 +48,26 @@ function doPost(e) {
       file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
       const fileUrl = file.getUrl();
       
-      sheet.appendRow([fecha, hora, fileUrl, "", "", ""]);
+      sheet.appendRow([fecha, hora, fileUrl, "", "", "", ""]);
       
       cuerpoEmail = `Se ha recibido un nuevo registro de audio.\n\nFecha: ${fecha}\nHora: ${hora}\nEnlace para escuchar el audio: ${fileUrl}`;
       
-      MailApp.sendEmail(EMAIL_DESTINO, "Nuevo Registro para el Evento de Quantico", cuerpoEmail);
+      GmailApp.sendEmail(EMAIL_DESTINO, "Nuevo Registro para el Evento de Quantico", cuerpoEmail);
       
       return ContentService.createTextOutput(JSON.stringify({ status: 'success', url: fileUrl })).setMimeType(ContentService.MimeType.JSON);
       
     } else if (type === 'text') {
       const nombre = data.nombre || "";
       const correo = data.correo || "";
+      const telefono = data.telefono || "";
       const empresa = data.empresa || "";
       
-      sheet.appendRow([fecha, hora, "Sin Audio", nombre, correo, empresa]);
+      // Orden: Fecha, Hora, Audio, Nombre, Correo, Teléfono, Empresa
+      sheet.appendRow([fecha, hora, "Sin Audio", nombre, correo, telefono, empresa]);
       
-      cuerpoEmail = `Se ha recibido un nuevo registro de texto.\n\nFecha: ${fecha}\nHora: ${hora}\nNombre: ${nombre}\nCorreo: ${correo}\nEmpresa: ${empresa}`;
+      cuerpoEmail = `Se ha recibido un nuevo registro de texto.\n\nFecha: ${fecha}\nHora: ${hora}\nNombre: ${nombre}\nCorreo: ${correo}\nTeléfono: ${telefono}\nEmpresa: ${empresa}`;
       
-      MailApp.sendEmail(EMAIL_DESTINO, "Nuevo Registro para el Evento de Quantico", cuerpoEmail);
+      GmailApp.sendEmail(EMAIL_DESTINO, "Nuevo Registro para el Evento de Quantico", cuerpoEmail);
       
       return ContentService.createTextOutput(JSON.stringify({ status: 'success' })).setMimeType(ContentService.MimeType.JSON);
     }
@@ -77,10 +80,8 @@ function doPost(e) {
   }
 }
 
-// Para lidiar con solicitudes OPTIONS (CORS preflight) si se usara application/json
 function doOptions(e) {
-  return ContentService.createTextOutput("OK")
-    .setMimeType(ContentService.MimeType.TEXT);
+  return ContentService.createTextOutput("OK").setMimeType(ContentService.MimeType.TEXT);
 }
 ```
 
