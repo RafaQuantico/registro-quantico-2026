@@ -185,6 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
             type: 'text',
             nombre: formData.get('nombre'),
             correo: formData.get('correo'),
+            telefono: formData.get('telefono'),
             empresa: formData.get('empresa')
         };
 
