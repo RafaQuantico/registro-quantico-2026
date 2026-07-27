@@ -1,0 +1,330 @@
+:root {
+    --bg-color: #ffffff;
+    --text-primary: #000000;
+    --text-secondary: #555555;
+    --accent: #000000;
+    --transition-speed: 0.5s;
+    --border-radius: 8px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    overflow: hidden;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* Header & Logo */
+.header {
+    width: 100%;
+    padding: 40px 20px 20px;
+    display: flex;
+    justify-content: center;
+    z-index: 10;
+}
+
+.logo {
+    max-height: 40px;
+    object-fit: contain;
+}
+
+/* Screens */
+.screen {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 40px 80px;
+    position: absolute;
+    top: 100px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+    transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease;
+}
+
+.screen.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+}
+
+.screen.hidden {
+    display: none;
+}
+
+/* Typography & Content Layout */
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+h1, h2 {
+    font-weight: 600;
+    font-size: 2.5rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+p {
+    font-size: 1.125rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    font-weight: 300;
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    font-weight: 400;
+}
+
+.highlight {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.divider {
+    height: 1px;
+    width: 40px;
+    background-color: var(--text-primary);
+    margin: 16px 0;
+}
+
+.instruction {
+    margin-bottom: 40px;
+}
+
+/* Animations */
+.fade-in {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInAnimation 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+
+@keyframes fadeInAnimation {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Buttons */
+.footer-action {
+    margin-top: auto;
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 18px 24px;
+    background-color: var(--accent);
+    color: var(--bg-color);
+    border: none;
+    border-radius: var(--border-radius);
+    font-family: inherit;
+    font-size: 1.125rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+/* Recording UI */
+.record-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn-record {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    background-color: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+    outline: none;
+}
+
+.mic-icon {
+    width: 32px;
+    height: 32px;
+    fill: var(--accent);
+    transition: fill 0.3s ease;
+}
+
+.btn-record:hover {
+    background-color: #f5f5f5;
+}
+
+.btn-record.recording {
+    background-color: var(--accent);
+    animation: pulse 1.5s infinite;
+}
+
+.btn-record.recording .mic-icon {
+    fill: var(--bg-color);
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+}
+
+.status-text {
+    margin-top: 16px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.status-text.recording {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.alt-action {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-text {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-family: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.btn-text:hover {
+    color: var(--text-primary);
+}
+
+/* Form Styles */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.input-group input {
+    padding: 14px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--text-primary);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Loading State */
+.upload-status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.upload-status.hidden {
+    display: none;
+}
+
+.spinner {
+    width: 30px;
+    height: 30px;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 12px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-height: 650px) {
+    .screen {
+        top: 80px;
+        padding-bottom: 40px;
+    }
+    h1, h2 {
+        font-size: 2rem;
+    }
+}
