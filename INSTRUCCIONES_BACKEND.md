@@ -13,28 +13,28 @@ Para que el formulario pueda guardar los audios en Google Drive y los registros 
 // Configuración de IDs
 const FOLDER_ID = '1Zav2AH_Ob90hfHI70Q7UsL0W2_i7Ojvl';
 const SHEET_ID = '1i6tNzEfeflP_vUFtDatgp50yzNHXhraqPpw8T7AQy-0';
+const EMAIL_DESTINO = 'jorge@quantico.cl';
 
 function doPost(e) {
   try {
-    // Para evitar problemas de CORS y preflight requests
+    // Para evitar problemas de CORS
     if (typeof e === 'undefined') {
       return ContentService.createTextOutput(JSON.stringify({ status: "error", message: "No data received" })).setMimeType(ContentService.MimeType.JSON);
     }
     
-    // El frontend envía todo como texto plano (JSON en el body)
+    // El frontend envía todo como texto plano
     const data = JSON.parse(e.postData.contents);
+    const type = data.type;
     
-    const type = data.type; // 'audio' o 'text'
-    
-    // 1. Obtener Fecha y Hora actual
+    // Obtener Fecha y Hora actual
     const now = new Date();
     const fecha = Utilities.formatDate(now, "America/Santiago", "dd/MM/yyyy");
     const hora = Utilities.formatDate(now, "America/Santiago", "HH:mm:ss");
     
     const sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
+    let cuerpoEmail = "";
     
     if (type === 'audio') {
-      // PROCESO DE AUDIO
       const base64Data = data.data;
       const filename = data.filename;
       const mimeType = data.mimeType;
@@ -44,31 +44,29 @@ function doPost(e) {
       const blob = Utilities.newBlob(decodedData, mimeType, filename);
       const file = folder.createFile(blob);
       
-      // Hacer que el archivo sea accesible
       file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
       const fileUrl = file.getUrl();
       
-      // En la planilla original guardábamos fecha, hora, url (sin nombre, correo, empresa)
       sheet.appendRow([fecha, hora, fileUrl, "", "", ""]);
       
-      return ContentService.createTextOutput(JSON.stringify({
-        status: 'success',
-        url: fileUrl
-      })).setMimeType(ContentService.MimeType.JSON);
+      cuerpoEmail = `Se ha recibido un nuevo registro de audio.\n\nFecha: ${fecha}\nHora: ${hora}\nEnlace para escuchar el audio: ${fileUrl}`;
+      
+      MailApp.sendEmail(EMAIL_DESTINO, "Nuevo Registro para el Evento de Quantico", cuerpoEmail);
+      
+      return ContentService.createTextOutput(JSON.stringify({ status: 'success', url: fileUrl })).setMimeType(ContentService.MimeType.JSON);
       
     } else if (type === 'text') {
-      // PROCESO DE TEXTO (Formulario escrito)
       const nombre = data.nombre || "";
       const correo = data.correo || "";
       const empresa = data.empresa || "";
       
-      // Guardamos la fila sin audio, pero con los datos
-      // Orden: fecha, hora, [Audio Vacío], Nombre, Correo, Empresa
       sheet.appendRow([fecha, hora, "Sin Audio", nombre, correo, empresa]);
       
-      return ContentService.createTextOutput(JSON.stringify({
-        status: 'success'
-      })).setMimeType(ContentService.MimeType.JSON);
+      cuerpoEmail = `Se ha recibido un nuevo registro de texto.\n\nFecha: ${fecha}\nHora: ${hora}\nNombre: ${nombre}\nCorreo: ${correo}\nEmpresa: ${empresa}`;
+      
+      MailApp.sendEmail(EMAIL_DESTINO, "Nuevo Registro para el Evento de Quantico", cuerpoEmail);
+      
+      return ContentService.createTextOutput(JSON.stringify({ status: 'success' })).setMimeType(ContentService.MimeType.JSON);
     }
     
   } catch (error) {
