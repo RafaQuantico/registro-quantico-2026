@@ -5,13 +5,11 @@ const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxX4Y0Ar6AyDZ
 document.addEventListener('DOMContentLoaded', () => {
 
     // Screens
-    const screen1 = document.getElementById('screen-1');
     const screen2 = document.getElementById('screen-2');
     const screen3 = document.getElementById('screen-3');
     const screenForm = document.getElementById('screen-form');
 
     // Elements
-    const btnStart = document.getElementById('btn-start');
     const btnRecord = document.getElementById('btn-record');
     const recordStatus = document.getElementById('record-status');
     const recordContainer = document.querySelector('.record-container');
@@ -39,10 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
         void screenToShow.offsetWidth;
         screenToShow.classList.add('active');
     }
-
-    btnStart.addEventListener('click', () => {
-        showScreen(screen2);
-    });
 
     btnTextForm.addEventListener('click', () => {
         showScreen(screenForm);
