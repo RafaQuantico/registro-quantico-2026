@@ -1,6 +1,6 @@
 // Endpoint de Google Apps Script. 
 // DEBE ser reemplazado por la URL de despliegue real que se obtendrá en el paso del Backend.
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxX4Y0Ar6AyDZsIkb8C-hUpMUoMM3yv_XFGTOs-Q9zLzrEbyX5Z7tqOG1cWW1G-yHgxRQ/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbysQrauShAzmuvCwPiyrL6nE7KvOqHDZPfWqcVQMgNNQbHxdMt1e2ogVtgmMH7u9d4m0w/exec';
 
 document.addEventListener('DOMContentLoaded', () => {
 

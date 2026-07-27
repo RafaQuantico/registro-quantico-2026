@@ -13,7 +13,7 @@ Para que el formulario pueda guardar los audios en Google Drive y los registros 
 // Configuración de IDs
 const FOLDER_ID = '1Zav2AH_Ob90hfHI70Q7UsL0W2_i7Ojvl';
 const SHEET_ID = '1i6tNzEfeflP_vUFtDatgp50yzNHXhraqPpw8T7AQy-0';
-const EMAIL_DESTINO = 'jorge@quantico.cl';
+const EMAIL_DESTINO = 'jorge@quantico.cl, rafael@quantico.cl';
 
 function doPost(e) {
   try {
